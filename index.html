@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Custom Image CAPTCHA</title>
+    <style>
+      body {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+        font-family: Arial, sans-serif;
+      }
+      .captcha-container {
+        display: grid;
+        grid-template-columns: repeat(3, 100px);
+        grid-template-rows: repeat(3, 100px);
+        gap: 5px;
+        margin-top: 20px;
+      }
+      .captcha-cell {
+        width: 100px;
+        height: 100px;
+        background-image: url("images/pic1.jpg"); /* Replace with your image path */
+        background-size: 300px 300px;
+        cursor: pointer;
+      }
+      .selected {
+        border: 2px solid blue;
+      }
+    </style>
+    <script>
+      let selectedCells = new Set();
+
+      function handleCaptchaClick(cellIndex) {
+        const cell = document.getElementById(`cell-${cellIndex}`);
+        if (selectedCells.has(cellIndex)) {
+          selectedCells.delete(cellIndex);
+          cell.classList.remove("selected");
+        } else {
+          selectedCells.add(cellIndex);
+          cell.classList.add("selected");
+        }
+
+        // Check if the selected cells match the required cells
+        const requiredCells = new Set([1, 3, 4, 6, 7]); // Adjusted indexes to match 0-based index
+        if (
+          selectedCells.size === requiredCells.size &&
+          [...selectedCells].every((value) => requiredCells.has(value))
+        ) {
+          window.location.href = "website.html";
+        }
+      }
+    </script>
+  </head>
+  <body>
+    <div>Select all images with Ajab</div>
+    <div class="captcha-container">
+      <!-- Each cell in the 3x3 grid -->
+      <div
+        id="cell-0"
+        class="captcha-cell"
+        style="background-position: 0 0"
+        onclick="handleCaptchaClick(0)"
+      ></div>
+      <div
+        id="cell-1"
+        class="captcha-cell"
+        style="background-position: -100px 0"
+        onclick="handleCaptchaClick(1)"
+      ></div>
+      <div
+        id="cell-2"
+        class="captcha-cell"
+        style="background-position: -200px 0"
+        onclick="handleCaptchaClick(2)"
+      ></div>
+      <div
+        id="cell-3"
+        class="captcha-cell"
+        style="background-position: 0 -100px"
+        onclick="handleCaptchaClick(3)"
+      ></div>
+      <div
+        id="cell-4"
+        class="captcha-cell"
+        style="background-position: -100px -100px"
+        onclick="handleCaptchaClick(4)"
+      ></div>
+      <div
+        id="cell-5"
+        class="captcha-cell"
+        style="background-position: -200px -100px"
+        onclick="handleCaptchaClick(5)"
+      ></div>
+      <div
+        id="cell-6"
+        class="captcha-cell"
+        style="background-position: 0 -200px"
+        onclick="handleCaptchaClick(6)"
+      ></div>
+      <div
+        id="cell-7"
+        class="captcha-cell"
+        style="background-position: -100px -200px"
+        onclick="handleCaptchaClick(7)"
+      ></div>
+      <div
+        id="cell-8"
+        class="captcha-cell"
+        style="background-position: -200px -200px"
+        onclick="handleCaptchaClick(8)"
+      ></div>
+    </div>
+  </body>
+</html>
